@@ -1,5 +1,6 @@
 import React from 'react'
 import { useQuery, gql } from '@apollo/client'
+import LoadingScreen from './LoadingScreen'
 
 const POST_QUERY = gql`
     query {
@@ -13,10 +14,13 @@ const POST_QUERY = gql`
 
 const HomePage = () => {
     const { data, loading, error } = useQuery(POST_QUERY)
-    console.log(data)
+
+    if(loading) return(<LoadingScreen />)
 
     return (
+    <>
         <div>HomePage</div>
+    </>
     )
 }
 
