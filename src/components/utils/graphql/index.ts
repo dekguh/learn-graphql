@@ -1,12 +1,9 @@
 import {
     ApolloClient,
     InMemoryCache,
-    ApolloProvider,
-    useQuery,
-    gql
   } from '@apollo/client'
 
   export const client = new ApolloClient({
-    uri: 'https://graphqlzero.almansi.me/api',
+    uri: 'https://rental-motoran.herokuapp.com/graphql',
     cache: new InMemoryCache()
   });

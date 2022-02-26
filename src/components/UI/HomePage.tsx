@@ -4,10 +4,10 @@ import LoadingScreen from './LoadingScreen'
 
 const POST_QUERY = gql`
     query {
-        post(id: 1) {
-        id
-        title
-        body
+        artikel(id: 1) {
+            id
+            judul
+            konten
         }
     }
 `
@@ -16,6 +16,8 @@ const HomePage = () => {
     const { data, loading, error } = useQuery(POST_QUERY)
 
     if(loading) return(<LoadingScreen />)
+
+    console.log(data)
 
     return (
     <>
