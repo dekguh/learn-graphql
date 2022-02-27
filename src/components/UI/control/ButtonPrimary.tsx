@@ -1,5 +1,5 @@
 import React from 'react'
-import { IButton } from '../utils/types'
+import { IButton } from '../../utils/types'
 import styled from 'styled-components'
 
 const ButtonStyled = styled.button`
@@ -7,14 +7,17 @@ const ButtonStyled = styled.button`
     background: linear-gradient(73deg, rgba(87,169,255,1) 0%, rgba(1,27,249,1) 100%);
     font-size: 16px;
     color: #FFFFFF;
-    padding: 13px 25px;
+    padding: 11px 25px;
     border-radius: 4px;
     border: none;
+    display: block;
+    text-align: center;
+    width: 100%;
 `
 
-const ButtonPrimary : React.FC<IButton> = ({ text, onClick }) => {
+const ButtonPrimary : React.FC<IButton> = ({ text, onClick, style }) => {
   return (
-    <ButtonStyled onClick={onClick}>{text}</ButtonStyled>
+    <ButtonStyled onClick={onClick} style={style}>{text}</ButtonStyled>
   )
 }
 

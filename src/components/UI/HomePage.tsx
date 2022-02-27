@@ -1,6 +1,7 @@
 import React from 'react'
 import { useQuery, gql } from '@apollo/client'
 import LoadingScreen from './LoadingScreen'
+import Input from './control/Input'
 
 const POST_QUERY = gql`
     query {
@@ -21,7 +22,9 @@ const HomePage = () => {
 
     return (
     <>
-        <div>HomePage</div>
+        <div>
+            <Input />
+        </div>
     </>
     )
 }
