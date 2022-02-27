@@ -2,6 +2,7 @@ import React from 'react'
 import { useQuery, gql } from '@apollo/client'
 import LoadingScreen from './LoadingScreen'
 import Input from './control/Input'
+import withAuth from '../utils/HOC/withAuth'
 
 const POST_QUERY = gql`
     query {
@@ -29,4 +30,4 @@ const HomePage = () => {
     )
 }
 
-export default HomePage
+export default withAuth(HomePage)
