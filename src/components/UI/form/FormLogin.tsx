@@ -22,7 +22,7 @@ const FormLogin = () => {
         if(data) {
             setMessageError([])
             localStorage.setItem('jwt_learn', data.login.jwt)
-            navigate('/')
+            data.login.jwt && navigate('/')
         }
     }, [error, data])
 
