@@ -13,6 +13,7 @@ const ButtonStyled = styled.button`
     display: block;
     text-align: center;
     width: 100%;
+    cursor: pointer;
 `
 
 const ButtonPrimary : React.FC<IButton> = ({ text, onClick, style }) => {

@@ -13,3 +13,8 @@ export interface IInput {
     style?: object;
     type?: 'text' | 'password' | 'email' | 'number';
 }
+
+export interface IAlert {
+    type?: 'danger' | 'info';
+    text?: string;
+}

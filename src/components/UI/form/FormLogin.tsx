@@ -1,34 +1,85 @@
-import React from 'react'
+import { useMutation } from '@apollo/client'
+import React, { ChangeEvent, useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import { MUTATION_LOGIN_USER } from '../../utils/graphql/MUTATION'
+import Alert from '../control/Alert'
 import ButtonPrimary from '../control/ButtonPrimary'
 import Input from '../control/Input'
+import LoadingScreen from '../LoadingScreen'
 
 const FormLogin = () => {
-  return (
-    <Wrapper>
-        <Inner>
-            <div style={{ marginBottom: '15px' }}>
-                <Title>Sign in</Title>
-            </div>
+    const navigate = useNavigate()
+    const [dataLogin, setDataLogin] = useState({
+        email: '',
+        password: ''
+    })
+    const [messageError, setMessageError] = useState<any>([])
+    const [loginUser, { data, loading, error }] = useMutation(MUTATION_LOGIN_USER)
 
-            <div>
-                <div style={{ marginBottom: '12px' }}>
-                    <Label>e-mail</Label>
-                    <Input placeholder='email' type='email'/>
-                </div>
+    useEffect(() => {
+        error && setMessageError(error?.graphQLErrors || [])
+        if(data) {
+            setMessageError([])
+            localStorage.setItem('jwt_learn', data.login.jwt)
+            navigate('/')
+        }
+    }, [error, data])
 
-                <div style={{ marginBottom: '12px' }}>
-                    <Label>password</Label>
-                    <Input placeholder='password' type='password'/>
+    if(loading) return(<LoadingScreen />)
+
+    return (
+        <Wrapper>
+            <Inner>
+                <div style={{ marginBottom: '15px' }}>
+                    <Title>Sign in</Title>
                 </div>
 
                 <div>
-                    <ButtonPrimary text='login'/>
+                    <div>
+                        {messageError.length >= 1 && (<Alert
+                            text={messageError[0].extensions.exception.data.data[0].messages[0].message}
+                            type='danger'
+                        />)}
+                    </div>
+
+                    <div style={{ marginBottom: '12px' }}>
+                        <Label>e-mail</Label>
+                        <Input
+                            placeholder='email'
+                            type='email'
+                            value={dataLogin.email}
+                            onChange={(e : ChangeEvent<HTMLInputElement>) => setDataLogin({ ...dataLogin, email: e.target.value })}
+                        />
+                    </div>
+
+                    <div style={{ marginBottom: '12px' }}>
+                        <Label>password</Label>
+                        <Input
+                            placeholder='password'
+                            type='password'
+                            value={dataLogin.password}
+                            onChange={(e : ChangeEvent<HTMLInputElement>) => setDataLogin({ ...dataLogin, password: e.target.value })}
+                        />
+                    </div>
+
+                    <div>
+                        <ButtonPrimary
+                            text='login'
+                            onClick={() => loginUser({
+                                variables: {
+                                    input: {
+                                        identifier: dataLogin.email,
+                                        password: dataLogin.password,
+                                    }
+                                }
+                            })}
+                        />
+                    </div>
                 </div>
-            </div>
-        </Inner>
-    </Wrapper>
-  )
+            </Inner>
+        </Wrapper>
+    )
 }
 
 const Wrapper = styled.div`
