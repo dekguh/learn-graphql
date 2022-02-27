@@ -66,15 +66,21 @@ const FormLogin = () => {
                     <div>
                         <ButtonPrimary
                             text='login'
-                            onClick={() => loginUser({
-                                variables: {
-                                    input: {
-                                        identifier: dataLogin.email,
-                                        password: dataLogin.password,
+                            onClick={() => {
+                                (dataLogin.email && dataLogin.password) && loginUser({
+                                    variables: {
+                                        input: {
+                                            identifier: dataLogin.email,
+                                            password: dataLogin.password,
+                                        }
                                     }
-                                }
-                            })}
+                                })
+                            }}
                         />
+                    </div>
+
+                    <div style={{ margin: '20px 0', textAlign: 'center' }}>
+                        demo@demo.com:123123
                     </div>
                 </div>
             </Inner>
