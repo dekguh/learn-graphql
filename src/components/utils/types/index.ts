@@ -18,3 +18,13 @@ export interface IAlert {
     type?: 'danger' | 'info';
     text?: string;
 }
+
+export interface IFormAddTodo {
+    titleOnChange?: ChangeEventHandler;
+    dateOnChange?: ChangeEventHandler;
+    createOnClick?: MouseEventHandler;
+}
+
+export interface IListTodo {
+    list?: Array<any>;
+}

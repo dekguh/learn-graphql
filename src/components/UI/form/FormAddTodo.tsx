@@ -1,23 +1,35 @@
 import React from 'react'
+import { IFormAddTodo } from '../../utils/types'
 import ButtonPrimary from '../control/ButtonPrimary'
 import Input from '../control/Input'
 
-const FormAddTodo = () => {
-  return (
-    <div>
-        <div style={{ marginBottom: '8px' }}>
-            <Input placeholder='title' type='text'/>
-        </div>
-
-        <div style={{ marginBottom: '8px' }}>
-            <Input placeholder='title' type='date'/>
-        </div>
-
+const FormAddTodo : React.FC<IFormAddTodo> = ({ titleOnChange, dateOnChange, createOnClick }) => {
+    return (
         <div>
-            <ButtonPrimary text='add todo'/>
+            <div style={{ marginBottom: '8px' }}>
+                <Input
+                    placeholder='title'
+                    type='text'
+                    onChange={titleOnChange}
+                />
+            </div>
+
+            <div style={{ marginBottom: '8px' }}>
+                <Input
+                    placeholder='date'
+                    type='date'
+                    onChange={dateOnChange}
+                />
+            </div>
+
+            <div>
+                <ButtonPrimary
+                    text='add todo'
+                    onClick={createOnClick}
+                />
+            </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default FormAddTodo

@@ -1,7 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
+import { IListTodo } from '../../utils/types'
 
-const ListTodo = () => {
+const ListTodo : React.FC<IListTodo> = ({ list }) => {
   return (
     <Table>
         <thead>
@@ -13,22 +14,24 @@ const ListTodo = () => {
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>cooking</td>
-                <td>2020-03-01</td>
-                <td>
-                    <button
-                        style={{
-                            color: 'red',
-                            background: 'none',
-                            border: 'none',
-                            outline: 'none',
-                            fontSize: '14px'
-                        }}
-                    >delete</button>
-                </td>
-            </tr>
+            {list && list.map((data, i) => (
+                <tr key={i}>
+                    <td>{data.id}</td>
+                    <td>{data.title}</td>
+                    <td>{data.date}</td>
+                    <td>
+                        <button
+                            style={{
+                                color: 'red',
+                                background: 'none',
+                                border: 'none',
+                                outline: 'none',
+                                fontSize: '14px'
+                            }}
+                        >delete</button>
+                    </td>
+                </tr>
+            ))}
         </tbody>
     </Table>
   )
