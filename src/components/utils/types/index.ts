@@ -11,7 +11,7 @@ export interface IInput {
     onChange?: ChangeEventHandler;
     value?: string;
     style?: object;
-    type?: 'text' | 'password' | 'email' | 'number';
+    type?: 'text' | 'password' | 'email' | 'number' | 'date';
 }
 
 export interface IAlert {
