@@ -26,3 +26,13 @@ export const MUTATION_CREATE_TODO = gql`
         }
     }
 `
+
+export const MUTATION_DELETE_TODO = gql`
+    mutation deleteTodoByUser($id : ID!) {
+        deleteTodo( input: { where: { id: $id } } ) {
+            todo {
+                id
+            }
+        }
+    }
+`

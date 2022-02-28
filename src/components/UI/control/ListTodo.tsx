@@ -1,8 +1,11 @@
+import { useMutation } from '@apollo/client'
 import React from 'react'
 import styled from 'styled-components'
+import { MUTATION_DELETE_TODO } from '../../utils/graphql/MUTATION'
 import { IListTodo } from '../../utils/types'
 
-const ListTodo : React.FC<IListTodo> = ({ list }) => {
+const ListTodo : React.FC<IListTodo> = ({ list, refetchList }) => {
+    const [deleteTodoByUser, { data, loading }] = useMutation(MUTATION_DELETE_TODO)
   return (
     <Table>
         <thead>
@@ -16,7 +19,7 @@ const ListTodo : React.FC<IListTodo> = ({ list }) => {
         <tbody>
             {list && list.map((data, i) => (
                 <tr key={i}>
-                    <td>{data.id}</td>
+                    <td>{i+1}</td>
                     <td>{data.title}</td>
                     <td>{data.date}</td>
                     <td>
@@ -26,7 +29,18 @@ const ListTodo : React.FC<IListTodo> = ({ list }) => {
                                 background: 'none',
                                 border: 'none',
                                 outline: 'none',
-                                fontSize: '14px'
+                                fontSize: '14px',
+                                cursor: 'pointer'
+                            }}
+                            onClick={() => {
+                                deleteTodoByUser({
+                                    variables: {
+                                        id: Number(data.id)
+                                    },
+                                    onCompleted: () => {
+                                        refetchList()
+                                    }
+                                })
                             }}
                         >delete</button>
                     </td>

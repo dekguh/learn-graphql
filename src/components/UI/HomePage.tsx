@@ -23,8 +23,6 @@ const HomePage = () => {
 
     if(loading || getTodosList.loading) return(<LoadingScreen />)
 
-    console.log(getTodosList.data)
-
     return (
     <>
         <Wrapper>
@@ -51,7 +49,10 @@ const HomePage = () => {
                 />
             </div>
 
-            {getTodosList.data && (<ListTodo list={getTodosList.data.todos}/>)}
+            {getTodosList.data && (<ListTodo
+                list={getTodosList.data.todos}
+                refetchList={getTodosList.refetch}
+            />)}
         </Wrapper>
     </>
     )

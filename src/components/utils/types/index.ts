@@ -27,4 +27,5 @@ export interface IFormAddTodo {
 
 export interface IListTodo {
     list?: Array<any>;
+    refetchList: () => any;
 }
