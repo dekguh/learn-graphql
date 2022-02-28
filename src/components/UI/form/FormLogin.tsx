@@ -104,6 +104,7 @@ const Inner = styled.div`
     border-radius: 8px;
     box-shadow: 0 0 8px rgba(0, 0, 0, .09);
     padding: 20px;
+    margin: 0 30px;
 `
 
 const Title = styled.h2`
