@@ -8,6 +8,7 @@ import { MUTATION_CREATE_TODO } from '../utils/graphql/MUTATION'
 import { useMutation, useQuery } from '@apollo/client'
 import LoadingScreen from './LoadingScreen'
 import { QUERY_GET_TODOS_USER } from '../utils/graphql/QUERY'
+import Nav from './header/Nav'
 
 const HomePage = () => {
     const [dataTodo, setDataTodo] = useState({
@@ -26,6 +27,8 @@ const HomePage = () => {
     return (
     <>
         <Wrapper>
+            <Nav />
+
             <div style={{ marginBottom: '20px' }}>
                 <FormAddTodo
                     titleOnChange={(e : ChangeEvent<HTMLInputElement>) => setDataTodo({ ...dataTodo, title: e.target.value })}
