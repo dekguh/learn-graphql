@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, MouseEvent, useState } from 'react'
 import withAuth from '../utils/HOC/withAuth'
 import styled from 'styled-components'
 import ListTodo from './control/ListTodo'
@@ -9,6 +9,7 @@ import { useMutation, useQuery } from '@apollo/client'
 import LoadingScreen from './LoadingScreen'
 import { QUERY_GET_TODOS_USER } from '../utils/graphql/QUERY'
 import Nav from './header/Nav'
+import FormEditTodo from './form/FormEditTodo'
 
 const HomePage = () => {
     const [dataTodo, setDataTodo] = useState({
@@ -21,6 +22,11 @@ const HomePage = () => {
             user: parseJwt(localStorage.getItem('jwt_learn')).id
         }
     })
+    const [isFormAdd, setIsFormAdd] = useState<boolean>(true)
+
+    const setForm = (val: boolean = true) => {
+        setIsFormAdd(val)
+    }
 
     if(loading || getTodosList.loading) return(<LoadingScreen />)
 
@@ -30,7 +36,8 @@ const HomePage = () => {
             <Nav />
 
             <div style={{ marginBottom: '20px' }}>
-                <FormAddTodo
+                <h1>{isFormAdd ? 'Add todo' : 'Edit todo'}</h1>
+                {isFormAdd && (<FormAddTodo
                     titleOnChange={(e : ChangeEvent<HTMLInputElement>) => setDataTodo({ ...dataTodo, title: e.target.value })}
                     dateOnChange={(e : ChangeEvent<HTMLInputElement>) => setDataTodo({ ...dataTodo, date: e.target.value })}
                     createOnClick={() => {
@@ -49,12 +56,15 @@ const HomePage = () => {
                             }
                         })
                     }}
-                />
+                />)}
+
+                {!isFormAdd && (<FormEditTodo setForm={setForm}/>)}
             </div>
 
             {getTodosList.data && (<ListTodo
                 list={getTodosList.data.todos}
                 refetchList={getTodosList.refetch}
+                setForm={setForm}
             />)}
         </Wrapper>
     </>
