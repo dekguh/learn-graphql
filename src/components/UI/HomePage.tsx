@@ -23,12 +23,15 @@ const HomePage = () => {
         }
     })
     const [isFormAdd, setIsFormAdd] = useState<boolean>(true)
+    const [todoId, setTodoId] = useState<number | string | undefined>('')
 
     const setForm = (val: boolean = true) => {
         setIsFormAdd(val)
     }
 
     if(loading || getTodosList.loading) return(<LoadingScreen />)
+
+    console.log(todoId)
 
     return (
     <>
@@ -58,13 +61,14 @@ const HomePage = () => {
                     }}
                 />)}
 
-                {!isFormAdd && (<FormEditTodo setForm={setForm}/>)}
+                {!isFormAdd && (<FormEditTodo setForm={setForm} todoId={todoId}/>)}
             </div>
 
             {getTodosList.data && (<ListTodo
                 list={getTodosList.data.todos}
                 refetchList={getTodosList.refetch}
                 setForm={setForm}
+                setTodoId={setTodoId}
             />)}
         </Wrapper>
     </>

@@ -11,3 +11,13 @@ export const QUERY_GET_TODOS_USER = gql`
         }
     }
 `
+
+export const QUERY_GET_TODO_DETAIL = gql`
+    query getTodoDetail($id: ID!) {
+        todo(id: $id) {
+        id
+        title
+        date
+        }
+    }
+`

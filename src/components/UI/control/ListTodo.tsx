@@ -4,7 +4,7 @@ import styled from 'styled-components'
 import { MUTATION_DELETE_TODO } from '../../utils/graphql/MUTATION'
 import { IListTodo } from '../../utils/types'
 
-const ListTodo : React.FC<IListTodo> = ({ list, refetchList, onClickEdit, setForm }) => {
+const ListTodo : React.FC<IListTodo> = ({ list, refetchList, onClickEdit, setForm, setTodoId }) => {
     const [deleteTodoByUser, { data, loading }] = useMutation(MUTATION_DELETE_TODO)
   return (
     <Table>
@@ -21,7 +21,10 @@ const ListTodo : React.FC<IListTodo> = ({ list, refetchList, onClickEdit, setFor
                 <tr key={i}>
                     <td>{i+1}</td>
                     <td>
-                        <a href="#" onClick={() => setForm(false)}>{data.title}</a>
+                        <a href="#" onClick={() => {
+                            setForm(false)
+                            setTodoId(data.id)
+                        }}>{data.title}</a>
                     </td>
                     <td>{data.date}</td>
                     <td>

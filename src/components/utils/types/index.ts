@@ -30,9 +30,11 @@ export interface IListTodo {
     refetchList: () => any;
     onClickEdit?: MouseEventHandler;
     setForm: (val?: boolean) => void;
+    setTodoId: (val?: string | number) => void;
 }
 
 export interface IFormEditTodo extends Pick<IFormAddTodo, 'titleOnChange' | 'dateOnChange'> {
     setForm: (val?: boolean) => void;
     editOnClick?: MouseEventHandler;
+    todoId?: string | number;
 }
