@@ -37,4 +37,5 @@ export interface IFormEditTodo extends Pick<IFormAddTodo, 'titleOnChange' | 'dat
     setForm: (val?: boolean) => void;
     editOnClick?: MouseEventHandler;
     todoId?: string | number;
+    refetchList: () => void;
 }

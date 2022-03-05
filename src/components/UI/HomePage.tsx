@@ -31,8 +31,6 @@ const HomePage = () => {
 
     if(loading || getTodosList.loading) return(<LoadingScreen />)
 
-    console.log(todoId)
-
     return (
     <>
         <Wrapper>
@@ -61,7 +59,7 @@ const HomePage = () => {
                     }}
                 />)}
 
-                {!isFormAdd && (<FormEditTodo setForm={setForm} todoId={todoId}/>)}
+                {!isFormAdd && (<FormEditTodo setForm={setForm} todoId={todoId} refetchList={getTodosList.refetch}/>)}
             </div>
 
             {getTodosList.data && (<ListTodo

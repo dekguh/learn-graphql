@@ -1,16 +1,18 @@
-import { useLazyQuery } from '@apollo/client'
+import { useLazyQuery, useMutation } from '@apollo/client'
 import React, { ChangeEvent, useEffect, useState } from 'react'
+import { MUTATION_UPDATE_TODO } from '../../utils/graphql/MUTATION'
 import { QUERY_GET_TODO_DETAIL } from '../../utils/graphql/QUERY'
-import { IFormAddTodo, IFormEditTodo } from '../../utils/types'
+import { IFormEditTodo } from '../../utils/types'
 import ButtonPrimary from '../control/ButtonPrimary'
 import Input from '../control/Input'
 
-const FormEditTodo : React.FC<IFormEditTodo> = ({ titleOnChange, dateOnChange, editOnClick, setForm, todoId }) => {
-    const [getSingleData, { loading, data, refetch }] = useLazyQuery(QUERY_GET_TODO_DETAIL, {
+const FormEditTodo : React.FC<IFormEditTodo> = ({ titleOnChange, dateOnChange, editOnClick, setForm, todoId, refetchList }) => {
+    const [getSingleData, { loading : loadingSingle, data : dataSingle }] = useLazyQuery(QUERY_GET_TODO_DETAIL, {
         variables: {
             id: todoId
         }
     })
+    const [updateSingleTodo, { data : dataUpdate, loading : loadingUpdate }] = useMutation(MUTATION_UPDATE_TODO)
     const [dataTodo, setDataTodo] = useState<{[key: string] : any}>({
         title: '',
         date: ''
@@ -18,10 +20,10 @@ const FormEditTodo : React.FC<IFormEditTodo> = ({ titleOnChange, dateOnChange, e
 
     useEffect(() => {
         setDataTodo({
-            title: data && data.todo.title,
-            date: data && data.todo.date,
+            title: dataSingle && dataSingle.todo.title,
+            date: dataSingle && dataSingle.todo.date,
         })
-    }, [data])
+    }, [dataSingle])
 
     useEffect(() => {
         todoId && getSingleData({
@@ -65,7 +67,17 @@ const FormEditTodo : React.FC<IFormEditTodo> = ({ titleOnChange, dateOnChange, e
                 <ButtonPrimary
                     text='edit todo'
                     onClick={() => {
-                        setForm(true)
+                        updateSingleTodo({
+                            variables: {
+                                id: todoId,
+                                title: dataTodo.title,
+                                date: dataTodo.date
+                            },
+                            onCompleted: () => {
+                                refetchList()
+                                setForm(true)
+                            }
+                        })
                     }}
                 />
             </div>

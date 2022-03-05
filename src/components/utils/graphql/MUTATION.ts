@@ -36,3 +36,23 @@ export const MUTATION_DELETE_TODO = gql`
         }
     }
 `
+
+export const MUTATION_UPDATE_TODO = gql`
+    mutation updateTodoDetail($id: ID!, $title: String, $date: String) {
+        updateTodo(input: {
+            where: {
+                id: $id
+            },
+            data: {
+                title: $title,
+                date: $date
+            }
+        }) {
+            todo {
+                id
+                title
+                date
+            }
+        }
+    }
+`
